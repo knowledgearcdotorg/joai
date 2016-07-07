@@ -7,9 +7,9 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>development@knowledgearc.com</authorEmail>
 	<authorUrl>www.knowledgearc.org</authorUrl>
-	<version>0.1.0</version>
+	<version>1.0.0-alpha</version>
 	<description>PLG_JOAI_ORE_XML_DESCRIPTION</description>
-	
+
 	<files>
 		<filename plugin="ore">ore.php</filename>
 	</files>
