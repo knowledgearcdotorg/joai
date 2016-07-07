@@ -1,0 +1,5 @@
+id=joai
+src=.
+path.joomla=/var/www/html/
+package.extensions=
+package.version=1.0.0-dev
