@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="3.6" method="upgrade">
+    <name>JOai Package</name>
+    <author>KnowledgeArc Ltd</author>
+    <creationDate>2017-05-25</creationDate>
+    <packagename>joai</packagename>
+    <version>1.0.0-dev</version>
+    <copyright>>Copyright (C) 2014-2017 KnowledgeArc Ltd. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html</license>
+    <packager>KnowledgeArc Ltd</packager>
+    <packagerurl>http://www.knowledgearc.org</packagerurl>
+    <description>JOai package.</description>
+
+    <files folder="packages">
+        <file type="plugin" id="dim" group="joaipmh">plg_joaipmh_dim.zip</file>
+        <file type="plugin" id="qdc" group="joaipmh">plg_joaipmh_qdc.zip</file>
+        <file type="plugin" id="oaidc" group="joaipmh">plg_joaipmh_oaidc.zip</file>
+        <file type="plugin" id="ore" group="joaiore">plg_joaiore_ore.zip</file>
+    </files>
+
+    <updateservers>
+        <server type="extension" priority="1" name="JCar">https://raw.githubusercontent.com/knowledgearcdotorg/joai/master/manifest.xml</server>
+    </updateservers>
+</extension>

@@ -11,15 +11,21 @@ defined('_JEXEC') or die;
  *
  * @package  JOai.Plugin
  */
-class PlgJOaiDim extends JPlugin
+class PlgJOaiPmhDim extends JPlugin
 {
     public function __construct(&$subject, $config)
     {
         parent::__construct($subject, $config);
         $this->params->set('metadataPrefix', 'dim');
+
+        $registry = new \Joomla\Registry\Registry;
+        $registry->separator = "-"; // we want to keep the "." notation for dc.
+        $registry->loadFile(__DIR__."/crosswalk.json", "JSON");
+
+        $this->registry = $registry;
     }
 
-    public function onJOaiQueryMetadataFormat()
+    public function onJOaiPmhQueryMetadataFormat()
     {
         return $this->params->get('metadataPrefix');
     }
@@ -32,9 +38,9 @@ class PlgJOaiDim extends JPlugin
      *
      * @return  array             An associative array of metadata.
      */
-    public function onJOaiHarvestMetadata($context, $data)
+    public function onJOaiPmhHarvestMetadata($context, $data)
     {
-        if ($context != "joai.".$this->params->get('metadataPrefix')) {
+        if ($context != "joaipmh.".$this->params->get('metadataPrefix')) {
             return;
         }
 
@@ -69,6 +75,10 @@ class PlgJOaiDim extends JPlugin
 
                             $key = implode('.', $parts);
 
+                            if ($schemalessKey = $this->crosswalk($key)) {
+                                $key = $schemalessKey;
+                            }
+
                             $values = JArrayHelper::getValue($metadata, $key);
 
                             if (!is_array($values)) {
@@ -85,5 +95,10 @@ class PlgJOaiDim extends JPlugin
         }
 
         return $metadata;
+    }
+
+    public function crosswalk($key)
+    {
+        return $this->registry->get($key);
     }
 }

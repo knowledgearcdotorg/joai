@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension version="3.2" type="plugin" group="joai" method="upgrade">
-	<name>plg_joai_qdc</name>
+<extension version="3.2" type="plugin" group="joaipmh" method="upgrade">
+	<name>plg_joaipmh_qdc</name>
 	<author>KnowledgeArc</author>
 	<creationDate>2014/07/06</creationDate>
-	<copyright>Copyright (C) 2014 KnowledgeArc Ltd. All rights reserved.</copyright>
+	<copyright>Copyright (C) 2014-2017 KnowledgeArc Ltd. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>development@knowledgearc.com</authorEmail>
 	<authorUrl>www.knowledgearc.org</authorUrl>
@@ -14,8 +14,8 @@
 		<filename plugin="qdc">qdc.php</filename>
 	</files>
 	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_joai_qdc.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_joai_qdc.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_qdc.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_qdc.sys.ini</language>
 	</languages>
 	<config>
 	</config>

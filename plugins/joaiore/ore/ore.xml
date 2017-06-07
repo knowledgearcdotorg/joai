@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension version="3.2" type="plugin" group="joai" method="upgrade">
-	<name>plg_joai_ore</name>
+<extension version="3.2" type="plugin" group="joaiore" method="upgrade">
+	<name>plg_joaiore_ore</name>
 	<author>KnowledgeArc</author>
 	<creationDate>2014/07/06</creationDate>
 	<copyright>Copyright (C) 2014 KnowledgeArc Ltd. All rights reserved.</copyright>
@@ -8,14 +8,14 @@
 	<authorEmail>development@knowledgearc.com</authorEmail>
 	<authorUrl>www.knowledgearc.org</authorUrl>
 	<version>1.0.0-alpha</version>
-	<description>PLG_JOAI_ORE_XML_DESCRIPTION</description>
+	<description>PLG_JOAIORE_ORE_XML_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="ore">ore.php</filename>
 	</files>
 	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_joai_ore.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_joai_ore.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_joaiore_ore.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_joaiore_ore.sys.ini</language>
 	</languages>
 	<config>
 	</config>

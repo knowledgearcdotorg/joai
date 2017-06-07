@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension version="3.4" type="plugin" group="jharvest" method="upgrade">
-	<name>plg_jharvest_oaidc</name>
+<extension version="3.4" type="plugin" group="joaipmh" method="upgrade">
+	<name>plg_oaipmh_oaidc</name>
 	<author>KnowledgeArc</author>
 	<creationDate>2015/09/23</creationDate>
-	<copyright>Copyright (C) 2015 KnowledgeArc Ltd. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2015-2017 KnowledgeArc Ltd. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>development@knowledgearc.com</authorEmail>
 	<authorUrl>www.knowledgearc.org</authorUrl>
 	<version>1.0.0-alpha</version>
-	<description>PLG_JHARVEST_OAIDC_XML_DESCRIPTION</description>
+	<description>PLG_JOAIPMH_OAIDC_XML_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="oaidc">oaidc.php</filename>
 	</files>
 	<languages>
-        <language tag="en-GB">language/en-GB/en-GB.plg_jharvest_oaidc.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_jharvest_oaidc.sys.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_oaidc.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_oaidc.sys.ini</language>
 	</languages>
 	<config>
 	</config>

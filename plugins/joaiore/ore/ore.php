@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
  *
  * @package  JOai.Plugin
  */
-class PlgJOaiOre extends JPlugin
+class PlgJOaiOreOre extends JPlugin
 {
     /**
      * Instatiates an instance of the PlgJOaiOre class.
@@ -35,7 +35,7 @@ class PlgJOaiOre extends JPlugin
      *
      * @return  string  The preferred metadata format.
      */
-    public function onJOaiQueryAssetFormat()
+    public function onJOaiOreQueryAssetFormat()
     {
         return 'ore';
     }
@@ -48,9 +48,9 @@ class PlgJOaiOre extends JPlugin
      *
      * @return  \Joomla\Registry\Registry[]  Returns an array of asset metadata as Registry objects.
      */
-    public function onJOaiHarvestAssets($context, $data)
+    public function onJOaiOreHarvestAssets($context, $data)
     {
-        if ($context != 'joai.ore') {
+        if ($context != 'joaiore.ore') {
             return;
         }
 

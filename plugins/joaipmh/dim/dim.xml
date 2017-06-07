@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension version="3.2" type="plugin" group="joai" method="upgrade">
-	<name>plg_joai_dim</name>
+<extension version="3.2" type="plugin" group="joaipmh" method="upgrade">
+	<name>plg_joaipmh_dim</name>
 	<author>KnowledgeArc</author>
 	<creationDate>2014/07/06</creationDate>
-	<copyright>Copyright (C) 2015 KnowledgeArc Ltd. All rights reserved.</copyright>
+	<copyright>Copyright (C) 2015-2017 KnowledgeArc Ltd. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>development@knowledgearc.com</authorEmail>
 	<authorUrl>www.knowledgearc.org</authorUrl>
 	<version>1.0.0-alpha</version>
-	<description>PLG_JOAI_DIM_XML_DESCRIPTION</description>
+	<description>PLG_JOAIPMH_DIM_XML_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="dim">dim.php</filename>
 	</files>
 	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_joai_dim.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_joai_dim.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_dim.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_dim.sys.ini</language>
 	</languages>
 	<config>
 	</config>

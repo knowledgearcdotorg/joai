@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Joomla Altmetric Plugin" default="help" basedir=".">
+<project name="Project builder for Joomla!" default="update" basedir=".">
     <property   file="build.properties"/>
     <property   name="path.administrator"            value="${path.joomla}/administrator"/>
     <property   name="path.administrator.components" value="${path.administrator}/components"/>
@@ -32,7 +32,7 @@
         </if>
     </target>
 
-  <target name="deploy_extension" hidden="true">
+    <target name="deploy_extension" hidden="true">
         <switch value="${path}">
             <case value="components/${directory}">
                 <phingcall target="deploy_component"/>
@@ -49,24 +49,6 @@
             <case value="plugins/${directory}">
                 <phingcall target="deploy_plugins"/>
             </case>
-
-            <!-- windows \ variations -->
-            <case value="components\${directory}">
-                <phingcall target="deploy_component"/>
-            </case>
-
-            <case value="libraries\${directory}">
-                <phingcall target="deploy_library"/>
-            </case>
-
-            <case value="modules\${directory}">
-                <phingcall target="deploy_module"/>
-            </case>
-
-            <case value="plugins\${directory}">
-                <phingcall target="deploy_plugins"/>
-            </case>
-
             <default/>
         </switch>
     </target>
@@ -145,27 +127,42 @@
                     <fileset dir="${path.libs}/${directory}" includes="**/*"/>
                 </delete>
 
+                <mkdir dir="${package.dest}/libraries/${directory}"/>
+
+                <copy
+                    todir="${package.dest}/libraries/${directory}">
+                    <fileset dir="${src}/libraries/${directory}">
+                        <include name="**/**"/>
+                    </fileset>
+                </copy>
+
+                <composer command="install" composer="${composer.phar}">
+                    <arg value="--optimize-autoloader"/>
+                    <arg value="--working-dir"/>
+                    <arg path="${package.dest}/libraries/${directory}"/>
+                </composer>
+
                 <copy todir="${path.libs}/${directory}">
-                    <fileset dir="./libraries/${directory}">
+                    <fileset dir="${package.dest}/libraries/${directory}">
                         <include name="**/**"/>
                         <exclude name="language/**"/>
                     </fileset>
                 </copy>
 
                 <copy todir="${path.languages}">
-                    <fileset dir="./libraries/${directory}/language">
+                    <fileset dir="${package.dest}/libraries/${directory}/language">
                         <include name="**/**"/>
                     </fileset>
                 </copy>
 
                 <copy todir="${path.administrator.languages}">
-                    <fileset dir="./libraries/${directory}/language">
+                    <fileset dir="${package.dest}/libraries/${directory}/language">
                         <include name="**/**"/>
                     </fileset>
                 </copy>
 
                 <copy todir="${path.administrator}/manifests">
-                    <fileset dir="libraries/${directory}">
+                    <fileset dir="${package.dest}/libraries/${directory}">
                         <include name="*.xml"/>
                     </fileset>
                 </copy>
@@ -239,16 +236,8 @@
         <phpunit bootstrap="tests/unit/bootstrap.php">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset dir="tests/unit/suites/libraries/JSpace/Metadata">
-                    <include name="*Test.php"/>
-                </fileset>
-                <fileset dir="tests/unit/suites/plugins/${id}">
-                    <include name="harvest/*Test.php"/>
-                    <include name="localstore/*Test.php"/>
-                    <include name="weblinks/*Test.php"/>
-                    <!-- it would be good to run the individual harvesting tests but something is causing the oai tests to fail. Most probably caused by both plugins being loaded. Would be good to have better control over loading and testing plugins. -->
-                    <exclude name="oai/*Test.php"/>
-                    <exclude name="opensearch/*Test.php"/>
+                <fileset dir="tests/unit/suites/libraries">
+                    <include name="**/*Test.php"/>
                 </fileset>
             </batchtest>
         </phpunit>
@@ -264,10 +253,6 @@
                 <include name="**/**"/>
             </fileset>
         </copy>
-
-        <move
-            file="${path.joomla}/../${id}/opensearch/htaccess.txt"
-            tofile="${path.joomla}/../${id}/opensearch/.htaccess"/>
     </target>
 
     <target name="cpd" description="Check for copying and pasting.">
@@ -280,30 +265,42 @@
     </target>
 
     <target name="package" description="Packages extensions ready for installation into Joomla!.">
+        <delete dir="${package.dest}"/>
+
         <mkdir dir="${package.dest}"/>
 
         <foreach list="${extensions}" param="extension" target="package_extensions"/>
 
+        <mkdir dir="${package.dest}/packages"/>
+
+        <!-- package everything if no package list is defined. -->
         <if>
-            <isset property="${package.extensions}"/>
+            <equals arg1="${package.extensions}" arg2=""/>
             <then>
+                <move todir="${package.dest}/packages">
+                    <fileset dir="${package.dest}">
+                        <include name="*.zip"/>
+                    </fileset>
+                </move>
+            </then>
+            <else>
                 <move todir="${package.dest}/packages">
                     <fileset dir="${package.dest}" includes="${package.extensions}"/>
                 </move>
-
-                <zip destfile="${package.dest}/pkg_${id}.zip">
-                    <fileset dir="${package.dest}">
-                        <include name="packages/**"/>
-                    </fileset>
-
-                    <fileset dir=".">
-                        <include name="pkg_${id}.xml"/>
-                    </fileset>
-                </zip>
-
-                <delete dir="${package.dest}/packages"/>
-            </then>
+            </else>
         </if>
+
+        <zip destfile="${package.dest}/pkg_${id}.zip">
+            <fileset dir="${package.dest}">
+                <include name="packages/**"/>
+            </fileset>
+
+            <fileset dir=".">
+                <include name="pkg_${id}.xml"/>
+            </fileset>
+        </zip>
+
+        <delete dir="${package.dest}/packages"/>
     </target>
 
     <target name="package_extensions" hidden="true">
@@ -331,6 +328,36 @@
                 </foreach>
             </case>
 
+            <case value="libraries/${directory}">
+                <foreach param="subdirectory" absparam="plugin_path" target="package_plugin">
+                    <fileset dir="plugins/${directory}">
+                        <type type="dir"/>
+                        <depth max="0" min="0"/>
+                    </fileset>
+                </foreach>
+            </case>
+
+            <case value="libraries/${directory}">
+                <mkdir dir="${package.dest}/libraries/${directory}"/>
+
+                <copy
+                    todir="${package.dest}/libraries/${directory}">
+                    <fileset dir="${src}/libraries/${directory}">
+                        <include name="**/**"/>
+                    </fileset>
+                </copy>
+
+                <composer command="install" composer="${composer.phar}">
+                    <arg value="--optimize-autoloader"/>
+                    <arg value="--working-dir"/>
+                    <arg path="${package.dest}/libraries/${directory}"/>
+                </composer>
+
+                <zip
+                    destfile="${package.dest}/${directory}.zip"
+                    basedir="${package.dest}/${extension}/${directory}"/>
+            </case>
+
             <default>
                 <zip
                     destfile="${package.dest}/${directory}.zip"
@@ -356,16 +383,21 @@
             basedir="${src}/${plugin_path}"/>
     </target>
 
-    <target name="setup_properties" hidden="true">
-        <tstamp>
-            <format property="build.date" pattern="%Y-%m-%d" />
-        </tstamp>
-
-        <!-- @TODO automate version. -->
+    <target name="phpdoc">
+        <delete dir="${package.dest}/apidocs"/>
+        <mkdir dir="${package.dest}/apidocs"/>
+        <phpdoc2
+            title="API Documentation"
+            destdir="${package.dest}/apidocs"
+            template="responsive-twig">
+            <fileset dir="./libraries/">
+                <include name="**/*.php" />
+            </fileset>
+        </phpdoc2>
     </target>
 
     <target name="help" description="Help documentation for this build file.">
-        <echo message="${id} for Joomla!"/>
+        <echo message="Project Builder for Joomla!"/>
         <echo message="Targets:"/>
 
         <echo message="cpd          Check for copy/paste code duplication."/>
@@ -380,6 +412,10 @@
 
         <echo message="package      Packages all extensions for installation"/>
         <echo message="             via the Joomla Extension Manager."/>
+
+        <echo message=""/>
+
+        <echo message="phpdoc       Builds the API documentation."/>
 
         <echo message=""/>
 
