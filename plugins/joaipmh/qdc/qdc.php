@@ -15,17 +15,17 @@ jimport('jspace.metadata.registry');
  *
  * @package  JSpace.Plugin
  */
-class PlgJoaiQdc extends JPlugin
+class PlgJOaiPmhQdc extends JPlugin
 {
     public function __construct(&$subject, $config)
     {
         parent::__construct($subject, $config);
         $this->params->set('metadataPrefix', 'qdc');
-    }
 
-    public function onJSpaceQueryMetadataFormat()
-    {
-        return $this->params->get('metadataPrefix');
+        $registry = new \Joomla\Registry\Registry;
+        $registry->loadFile(__DIR__."/crosswalk.json", "JSON");
+
+        $this->registry = $registry;
     }
 
     /**
@@ -36,9 +36,9 @@ class PlgJoaiQdc extends JPlugin
      *
      * @return  array             An associative array of metadata.
      */
-    public function onJHarvestHarvestMetadata($context, $data)
+    public function onJOaiPmhHarvestMetadata($context, $data)
     {
-        if ($context != "joai.".$this->params->get('metadataPrefix')) {
+        if ($context != "joaipmh.".$this->params->get('metadataPrefix')) {
             return;
         }
 
@@ -51,8 +51,12 @@ class PlgJoaiQdc extends JPlugin
                 $tags = $data->xpath('//'.$prefix.':*');
 
                 foreach ($tags as $tag) {
+                    $key = $prefix.':'.(string)$tag->getName();
+
                     if (JString::trim((string)$tag)) {
-                        $key = $prefix.':'.(string)$tag->getName();
+                        if ($schemalessKey = $this->registry->get($key)) {
+                            $key = $schemalessKey;
+                        }
 
                         $values = JArrayHelper::getValue($metadata, $key);
 

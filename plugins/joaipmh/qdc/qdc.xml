@@ -8,7 +8,7 @@
 	<authorEmail>development@knowledgearc.com</authorEmail>
 	<authorUrl>www.knowledgearc.org</authorUrl>
 	<version>1.0.0-alpha</version>
-	<description>PLG_JOAI_QDC_XML_DESCRIPTION</description>
+	<description>PLG_JOAIPMH_QDC_XML_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="qdc">qdc.php</filename>
