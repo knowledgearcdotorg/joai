@@ -14,7 +14,7 @@
     <files folder="packages">
         <file type="plugin" id="dim" group="joaipmh">plg_joaipmh_dim.zip</file>
         <file type="plugin" id="qdc" group="joaipmh">plg_joaipmh_qdc.zip</file>
-        <file type="plugin" id="oaidc" group="joaipmh">plg_joaipmh_oaidc.zip</file>
+        <file type="plugin" id="oai_dc" group="joaipmh">plg_joaipmh_oai_dc.zip</file>
         <file type="plugin" id="ore" group="joaiore">plg_joaiore_ore.zip</file>
     </files>
 

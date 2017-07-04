@@ -1,0 +1,17 @@
+{
+"dc:contributor":"contributor",
+"dc:coverage":"coverage",
+"dc:creator":"creator",
+"dc:date":"date",
+"dc:description":"description",
+"dc:format":"format",
+"dc:identifier":"identifier",
+"dc:language":"language",
+"dc:publisher":"publisher",
+"dc:relation":"relation",
+"dc:rights":"rights",
+"dc:source":"source",
+"dc:subject":"subject",
+"dc:title":"title",
+"dc:type":"type"
+}

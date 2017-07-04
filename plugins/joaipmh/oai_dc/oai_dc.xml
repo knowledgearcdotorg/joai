@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension version="3.4" type="plugin" group="joaipmh" method="upgrade">
+    <name>plg_joaipmh_oai_dc</name>
+    <author>KnowledgeArc</author>
+    <creationDate>2015/09/23</creationDate>
+    <copyright>Copyright (C) 2015-2017 KnowledgeArc Ltd. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>development@knowledgearc.com</authorEmail>
+    <authorUrl>www.knowledgearc.org</authorUrl>
+    <version>1.0.0-alpha</version>
+    <description>PLG_JOAIPMH_OAI_DC_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="oai_dc">oai_dc.php</filename>
+        <filename>crosswalk.json</filename>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_oai_dc.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_oai_dc.sys.ini</language>
+    </languages>
+    <config>
+    </config>
+</extension>

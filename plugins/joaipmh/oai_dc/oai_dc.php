@@ -13,30 +13,30 @@ use Joomla\Registry\Registry;
  *
  * @package  JHarvest.Plugin
  */
-class PlgJHarvestOaidc extends JPlugin
+class PlgJOaiPmhOai_dc extends JPlugin
 {
     public function __construct(&$subject, $config)
     {
         parent::__construct($subject, $config);
         $this->params->set('metadataPrefix', 'oai_dc');
+
+        $registry = new \Joomla\Registry\Registry;
+        $registry->loadFile(__DIR__."/crosswalk.json", "JSON");
+
+        $this->registry = $registry;
     }
 
-    public function onJSpaceQueryMetadataFormat()
+    /**
+     * Harvests a single oai_dc metadata item.
+     *
+     * @param   string                     $context   The current metadata item context.
+     * @param   SimpleXmlElement           $data      The metadata to consume.
+     *
+     * @return  \Joomla\Registry\Registry  A registry of metadata.
+     */
+    public function onJOaiPmhHarvestMetadata($context, $data)
     {
-        return $this->params->get('metadataPrefix');
-    }
-
-	/**
-	 * Harvests a single oai_dc metadata item.
-	 *
-	 * @param   string                     $context   The current metadata item context.
-	 * @param   SimpleXmlElement           $data      The metadata to consume.
-	 *
-	 * @return  \Joomla\Registry\Registry  A registry of metadata.
-	 */
-    public function onJHarvestHarvestMetadata($context, $data)
-    {
-        if ($context != 'joai.oai_dc') {
+        if ($context != "joaipmh.".$this->params->get('metadataPrefix')) {
             return;
         }
 
@@ -49,8 +49,12 @@ class PlgJHarvestOaidc extends JPlugin
                 $tags = $data->xpath('//'.$prefix.':*');
 
                 foreach ($tags as $tag) {
+                    $key = $prefix.':'.(string)$tag->getName();
+
                     if (JString::trim((string)$tag)) {
-                        $key = $prefix.':'.(string)$tag->getName();
+                        if ($schemalessKey = $this->registry->get($key)) {
+                            $key = $schemalessKey;
+                        }
 
                         $values = JArrayHelper::getValue($metadata, $key);
 
