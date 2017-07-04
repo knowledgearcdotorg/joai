@@ -12,6 +12,7 @@
 
 	<files>
 		<filename plugin="dim">dim.php</filename>
+        <filename>crosswalk.json</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.plg_joaipmh_dim.ini</language>

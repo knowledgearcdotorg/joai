@@ -25,11 +25,6 @@ class PlgJOaiPmhDim extends JPlugin
         $this->registry = $registry;
     }
 
-    public function onJOaiPmhQueryMetadataFormat()
-    {
-        return $this->params->get('metadataPrefix');
-    }
-
     /**
      * Harvests a single dim metadata item, saving it to the cache.
      *
@@ -75,7 +70,7 @@ class PlgJOaiPmhDim extends JPlugin
 
                             $key = implode('.', $parts);
 
-                            if ($schemalessKey = $this->crosswalk($key)) {
+                            if ($schemalessKey = $this->registry->get($key)) {
                                 $key = $schemalessKey;
                             }
 
@@ -95,10 +90,5 @@ class PlgJOaiPmhDim extends JPlugin
         }
 
         return $metadata;
-    }
-
-    public function crosswalk($key)
-    {
-        return $this->registry->get($key);
     }
 }
