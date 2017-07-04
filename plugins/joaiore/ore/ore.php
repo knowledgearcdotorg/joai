@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 /**
  * Harvests metadata and assets in the Object Reuse and Exchange format.
  *
- * @package  JOai.Plugin
+ * @package  JOaiOre.Plugin
  */
 class PlgJOaiOreOre extends JPlugin
 {
